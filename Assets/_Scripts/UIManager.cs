@@ -25,11 +25,25 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// Принять сообщение с текстом
     /// </summary>
-    /// <param name="message"></param>
+    /// <param name="fromClientId">ID клиента</param>
+    /// <param name="message">Сообщение</param>
     [MessageHandler((ushort) ClientToServerId.message)]
-    private static void MessageRecived(ushort fromClientId, Message message)
+    private static void MessageReceived(ushort fromClientId, Message message)
     {
         AddText(fromClientId, message.GetString());
+    }
+
+    /// <summary>
+    /// Принять сообщение с едой
+    /// </summary>
+    /// <param name="fromClientId">ID клиента</param>
+    /// <param name="message">Сообщение</param>
+    [MessageHandler((ushort) ClientToServerId.foodDataJson)]
+    private static void FoodDataJsonReceived(ushort fromClientId, Message message)
+    {
+        FoodData foodData = JsonUtility.FromJson<FoodData>(message.GetString());
+        LogHelper.Log(() => foodData.name);
+        LogHelper.Log(() => foodData.count);
     }
 
     #endregion

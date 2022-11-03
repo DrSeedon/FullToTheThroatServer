@@ -12,7 +12,9 @@ public enum ClientToServerId : ushort
 {
     name = 1,
     message = 2,
+    foodDataJson = 3,
 }
+
 public class NetworkManager : Singleton<NetworkManager>
 {
     public Server Server { get; private set; }
