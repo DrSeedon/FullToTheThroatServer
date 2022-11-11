@@ -43,7 +43,7 @@ public class UIManager : MonoBehaviour
     {
         FoodData foodData = JsonUtility.FromJson<FoodData>(message.GetString());
         LogHelper.Log(() => foodData.name);
-        LogHelper.Log(() => foodData.count);
+        LogHelper.Log(() => foodData.price);
     }
 
     #endregion
