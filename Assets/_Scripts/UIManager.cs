@@ -45,6 +45,6 @@ public class UIManager : MonoBehaviour
         LogHelper.Log(() => foodData.name);
         LogHelper.Log(() => foodData.price);
     }
-
+    
     #endregion
 }

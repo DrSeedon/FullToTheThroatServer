@@ -5,11 +5,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FoodCreater : MonoBehaviour
+public class FoodCreater : Singleton<FoodCreater>
 {
     public TMP_InputField inputFieldName;
     public TMP_InputField inputFieldPrice;
 
+    [SerializeReference]
     public List<FoodData> foodDatas = new List<FoodData>();
 
     public GameObject prefabDataElement;

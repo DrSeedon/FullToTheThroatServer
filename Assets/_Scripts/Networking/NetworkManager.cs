@@ -6,6 +6,7 @@ using UnityEngine;
 public enum ServerToClientId : ushort
 {
     playerSpawned = 1,
+    foodUpdate = 2,
 }
 
 public enum ClientToServerId : ushort
@@ -29,6 +30,7 @@ public class NetworkManager : Singleton<NetworkManager>
 
         Server = new Server();
         Server.Start(port, maxClientCount);
+        Server.ClientConnected += ClientConnected;
         Server.ClientDisconnected += ClientDisconnected;
     }
 
@@ -42,8 +44,20 @@ public class NetworkManager : Singleton<NetworkManager>
         Server.Stop();
     }
 
+    #region Event
     private void ClientDisconnected(object sender, ServerDisconnectedEventArgs e)
     {
         Destroy(Customer.list[e.Client.Id].gameObject);
     }
+    private void ClientConnected(object sender, ServerConnectedEventArgs e)
+    {
+        Debug.Log("hui");
+        string jsonString = JsonUtility.ToJson(FoodCreater.Instance.foodDatas, true);
+        
+        Message message = Message.Create(MessageSendMode.Reliable, (ushort) ServerToClientId.foodUpdate);
+        message.AddString(jsonString);
+        Server.Send(message, e.Client.Id);
+
+    }
+    #endregion
 }
