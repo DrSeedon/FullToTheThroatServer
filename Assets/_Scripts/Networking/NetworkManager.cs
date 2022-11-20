@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Riptide;
 using Riptide.Utils;
 using UnityEngine;
@@ -51,13 +52,10 @@ public class NetworkManager : Singleton<NetworkManager>
     }
     private void ClientConnected(object sender, ServerConnectedEventArgs e)
     {
-        Debug.Log("hui");
-        string jsonString = JsonUtility.ToJson(FoodCreater.Instance.foodDatas, true);
-        
+        string jsonString = JsonHelper.ToJson(FoodCreater.Instance.foodDatas.ToArray(), true);
         Message message = Message.Create(MessageSendMode.Reliable, (ushort) ServerToClientId.foodUpdate);
         message.AddString(jsonString);
         Server.Send(message, e.Client.Id);
-
     }
     #endregion
 }

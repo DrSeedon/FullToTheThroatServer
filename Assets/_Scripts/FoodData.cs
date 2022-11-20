@@ -6,6 +6,7 @@ public class FoodData
 {
     public string name;
     public int price;
+    public bool isAvailable = false;
 }
 
 public class OrderRow
