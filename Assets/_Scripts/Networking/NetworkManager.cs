@@ -8,6 +8,7 @@ public enum ServerToClientId : ushort
 {
     playerSpawned = 1,
     foodUpdate = 2,
+    foodReady = 3,
 }
 
 public enum ClientToServerId : ushort
@@ -52,7 +53,7 @@ public class NetworkManager : Singleton<NetworkManager>
     }
     private void ClientConnected(object sender, ServerConnectedEventArgs e)
     {
-        string jsonString = JsonHelper.ToJson(FoodCreater.Instance.foodDatas.ToArray(), true);
+        string jsonString = JsonHelper.ToJson(FoodCreater.Instance.foodDatas, true);
         Message message = Message.Create(MessageSendMode.Reliable, (ushort) ServerToClientId.foodUpdate);
         message.AddString(jsonString);
         Server.Send(message, e.Client.Id);
