@@ -9,38 +9,50 @@ using UnityEngine.UI;
 public class OrderElement : MonoBehaviour
 {
     public TMP_Text titleText;
-    public List<FoodData> foodData;
+    public Order order;
     public Button readyFood;
-    public Button addOrRemoveFood;
+    public Button issuedFood;
 
     public GameObject prefabDataElement;
     public GameObject parentDataElement;
 
+    public bool isReady = false;
+
     private void Start()
     {
         readyFood.onClick.AddListener(FoodReady);
+        issuedFood.onClick.AddListener(FoodIssued);
     }
 
+    public void FoodIssued()
+    {
+        Destroy(gameObject);
+        if(!isReady)
+            FoodReady();
+    }
     public void FoodReady()
     {
-        string jsonString = JsonHelper.ToJson(foodData, true);
+        string jsonString = JsonUtility.ToJson(order, true);
         Message message = Message.Create(MessageSendMode.Reliable, (ushort) ServerToClientId.foodReady);
         message.AddString(jsonString);
-        NetworkManager.Instance.Server.SendToAll(message);
+        NetworkManager.Instance.Server.Send(message, order.idClient);
+        isReady = true;
+        readyFood.interactable = false;
     }
     
     
-    public virtual void SetData(List<FoodData> datas)
+    public virtual void SetData(Order data)
     {
-        foodData = datas;
+        order = data;
 
-        foreach (var data in datas)
+        foreach (var orderRow in order.orderRows)
         {
             var obj = Instantiate(prefabDataElement, parentDataElement.transform);
             obj.SetActive(true);
             var dataElement = obj.GetComponent<OrderRowElement>();
-            dataElement.SetData(data);
+            dataElement.SetData(orderRow.foodData, orderRow.count);
         }
+
     }
     
     

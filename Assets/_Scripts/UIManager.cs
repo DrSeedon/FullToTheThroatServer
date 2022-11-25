@@ -41,8 +41,9 @@ public class UIManager : MonoBehaviour
     [MessageHandler((ushort) ClientToServerId.foodDataJson)]
     private static void FoodDataJsonReceived(ushort fromClientId, Message message)
     {
-        List<FoodData> foodDatas = JsonHelper.FromJsonList<FoodData>(message.GetString());
-        FoodOrderController.Instance.CreateOrder(foodDatas);
+        Order order = JsonUtility.FromJson<Order>(message.GetString());
+        order.idClient = fromClientId;
+        FoodOrderController.Instance.CreateOrder(order);
     }
     
     #endregion

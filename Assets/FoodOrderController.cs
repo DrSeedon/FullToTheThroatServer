@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class FoodOrderController : StaticInstance<FoodOrderController>
 {
-    public List<FoodData> foodData = new List<FoodData>();
     public GameObject prefabDataElement;
     public GameObject parentDataElement;
 
-    public void CreateOrder(List<FoodData> data)
+    public void CreateOrder(Order data)
     {
-        foodData = data;
-        
+        DataManager.Instance.orders.Add(data);
         var obj = Instantiate(prefabDataElement, parentDataElement.transform);
         obj.SetActive(true);
         var dataElement = obj.GetComponent<OrderElement>();

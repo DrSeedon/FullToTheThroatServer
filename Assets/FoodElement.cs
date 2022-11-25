@@ -40,7 +40,7 @@ public class FoodElement : MonoBehaviour
     public void DeleteElement()
     {
         //var find = FoodCreater.Instance.foodDatas.Find(x => x.name == foodData.name);
-        FoodCreater.Instance.foodDatas.Remove(foodData);
+        DataManager.Instance.foodDatas.Remove(foodData);
         Destroy(gameObject);
     }
 }

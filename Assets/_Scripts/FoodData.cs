@@ -9,17 +9,30 @@ public class FoodData
     public bool isAvailable = false;
 }
 
+[Serializable]
 public class OrderRow
 {
     public FoodData foodData = new FoodData();
     public int count;
     public int totalPriceRow;
+
+    public OrderRow(FoodData data, int count)
+    {
+        foodData = data;
+        this.count = count;
+    }
+
+    public OrderRow()
+    {
+    }
 }
 
+[Serializable]
 public class Order
 {
     public List<OrderRow> orderRows = new List<OrderRow>();
     public int totalPrice;
     public int numberOrder;
     public bool isReady = false;
+    public ushort idClient;
 }
