@@ -9,12 +9,15 @@ public class DataManager : StaticInstance<DataManager>
 {
     [SerializeReference] public List<FoodData> foodDatas = new List<FoodData>();
     [SerializeReference] public List<Order> orders = new List<Order>();
+    [SerializeReference] public List<LoggingManager.LoginData> loginDatas = new List<LoggingManager.LoginData>();
     
     [Serializable]
     public class SaveData
     {
         public List<FoodData> foodDatas = new List<FoodData>();
         public List<Order> orders = new List<Order>();
+        public List<LoggingManager.LoginData> loginDatas = new List<LoggingManager.LoginData>();
+        public int orderNumber = 0;
     }
 
     public SaveData saveData = new SaveData();
@@ -24,6 +27,7 @@ public class DataManager : StaticInstance<DataManager>
     {
         LoadGame();
         FoodCreater.Instance.CreateElements();
+        LoggingManager.Instance.ParseCSV();
     }
     private void OnDestroy()
     {
@@ -36,6 +40,7 @@ public class DataManager : StaticInstance<DataManager>
         ResetData();
         saveData.foodDatas = foodDatas;
         saveData.orders = orders;
+        saveData.loginDatas = loginDatas;
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.streamingAssetsPath
                                       + "/data.dat");
@@ -57,6 +62,7 @@ public class DataManager : StaticInstance<DataManager>
             saveData = (SaveData) bf.Deserialize(file);
             foodDatas = saveData.foodDatas;
             orders = saveData.orders;
+            loginDatas = saveData.loginDatas;
             file.Close();
             Debug.Log("Game data loaded!");
         }

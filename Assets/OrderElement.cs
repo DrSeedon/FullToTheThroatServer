@@ -44,6 +44,7 @@ public class OrderElement : MonoBehaviour
     public virtual void SetData(Order data)
     {
         order = data;
+        titleText.text = "Номер: " + data.numberOrder;
 
         foreach (var orderRow in order.orderRows)
         {
@@ -52,7 +53,6 @@ public class OrderElement : MonoBehaviour
             var dataElement = obj.GetComponent<OrderRowElement>();
             dataElement.SetData(orderRow.foodData, orderRow.count);
         }
-
     }
     
     

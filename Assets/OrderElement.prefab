@@ -826,7 +826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0b3d9507d2a5d24e84a280f7fedf968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleText: {fileID: 0}
+  titleText: {fileID: 2259885782667049783}
   order:
     orderRows: []
     totalPrice: 0
@@ -837,6 +837,7 @@ MonoBehaviour:
   issuedFood: {fileID: 2259885782340866398}
   prefabDataElement: {fileID: 2259885782056540760}
   parentDataElement: {fileID: 2259885782308472890}
+  isReady: 0
 --- !u!1 &2259885782826678354
 GameObject:
   m_ObjectHideFlags: 0

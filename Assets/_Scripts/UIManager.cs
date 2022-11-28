@@ -43,6 +43,8 @@ public class UIManager : MonoBehaviour
     {
         Order order = JsonUtility.FromJson<Order>(message.GetString());
         order.idClient = fromClientId;
+        DataManager.Instance.saveData.orderNumber++;
+        order.numberOrder = DataManager.Instance.saveData.orderNumber;
         FoodOrderController.Instance.CreateOrder(order);
     }
     

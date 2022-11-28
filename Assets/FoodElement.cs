@@ -21,7 +21,7 @@ public class FoodElement : MonoBehaviour
     public virtual void SetData(FoodData data)
     {
         this.foodData = data;
-        titleText.text = data.name;
+        titleText.text = data.name + " " + data.price + " руб.";
         SetVisualState(foodData.isAvailable);
     }
 

@@ -70,7 +70,7 @@ public class Customer : MonoBehaviour
     [MessageHandler((ushort) ClientToServerId.name)]
     private static void Name(ushort fromClientId, Message message)
     {
-        Spawn(fromClientId, message.GetString());
+        //Spawn(fromClientId, message.GetString());
     }
     #endregion
 }

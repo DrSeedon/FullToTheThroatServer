@@ -9,6 +9,8 @@ public enum ServerToClientId : ushort
     playerSpawned = 1,
     foodUpdate = 2,
     foodReady = 3,
+    loggingResponse = 4,
+    orderNumberResponse = 5,
 }
 
 public enum ClientToServerId : ushort
@@ -16,6 +18,7 @@ public enum ClientToServerId : ushort
     name = 1,
     message = 2,
     foodDataJson = 3,
+    loggingRequest = 4,
 }
 
 public class NetworkManager : Singleton<NetworkManager>
@@ -49,10 +52,11 @@ public class NetworkManager : Singleton<NetworkManager>
     #region Event
     private void ClientDisconnected(object sender, ServerDisconnectedEventArgs e)
     {
-        Destroy(Customer.list[e.Client.Id].gameObject);
+        //Destroy(Customer.list[e.Client.Id].gameObject);
     }
     private void ClientConnected(object sender, ServerConnectedEventArgs e)
     {
+        e.Client.CanTimeout = false;
         string jsonString = JsonHelper.ToJson(DataManager.Instance.foodDatas, true);
         Message message = Message.Create(MessageSendMode.Reliable, (ushort) ServerToClientId.foodUpdate);
         message.AddString(jsonString);
