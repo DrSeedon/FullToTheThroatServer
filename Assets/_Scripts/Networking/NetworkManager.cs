@@ -30,6 +30,7 @@ public class NetworkManager : Singleton<NetworkManager>
 
     private void Start()
     {
+        Message.MaxPayloadSize = 10000;
         Application.targetFrameRate = 60;
         RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
 
@@ -54,6 +55,7 @@ public class NetworkManager : Singleton<NetworkManager>
     {
         //Destroy(Customer.list[e.Client.Id].gameObject);
     }
+
     private void ClientConnected(object sender, ServerConnectedEventArgs e)
     {
         e.Client.CanTimeout = false;
@@ -61,6 +63,7 @@ public class NetworkManager : Singleton<NetworkManager>
         Message message = Message.Create(MessageSendMode.Reliable, (ushort) ServerToClientId.foodUpdate);
         message.AddString(jsonString);
         Server.Send(message, e.Client.Id);
+        
     }
     #endregion
 }

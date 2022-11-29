@@ -17,12 +17,35 @@ public class FoodElement : MonoBehaviour
     public Color unavailableColor;
     public string availableText;
     public string unavailableText;
+
+    public TMP_InputField weightInput;
+    public TMP_InputField compositionInput;
+
+    public TMP_Dropdown dropdownField;
     
     public virtual void SetData(FoodData data)
     {
         this.foodData = data;
         titleText.text = data.name + " " + data.price + " руб.";
+        weightInput.text = data.weight;
+        compositionInput.text = data.composition;
+        dropdownField.value = foodData.idСategory;
         SetVisualState(foodData.isAvailable);
+    }
+
+    public void SaveData()
+    {
+        //DataManager.Instance.foodDatas.Find(x => x.name == foodData.name).composition = compositionInput.text;
+        //DataManager.Instance.foodDatas.Find(x => x.name == foodData.name).weight = weightInput.text;
+        
+        foodData.composition = compositionInput.text;
+        foodData.weight = weightInput.text;
+        foodData.idСategory = dropdownField.value;
+    }
+
+    public void SetImageId(int id)
+    {
+        foodData.idImage = id;
     }
 
     public void ChangeState()
