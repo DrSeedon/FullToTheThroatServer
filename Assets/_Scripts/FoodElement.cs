@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -20,15 +21,17 @@ public class FoodElement : MonoBehaviour
 
     public TMP_InputField weightInput;
     public TMP_InputField compositionInput;
+    public TMP_InputField priceInput;
 
     public TMP_Dropdown dropdownField;
     
     public virtual void SetData(FoodData data)
     {
         this.foodData = data;
-        titleText.text = data.name + " " + data.price + " руб.";
+        titleText.text = data.name;
         weightInput.text = data.weight;
         compositionInput.text = data.composition;
+        priceInput.text = data.price.ToString();
         dropdownField.value = foodData.idСategory;
         SetVisualState(foodData.isAvailable);
     }
@@ -39,6 +42,7 @@ public class FoodElement : MonoBehaviour
         //DataManager.Instance.foodDatas.Find(x => x.name == foodData.name).weight = weightInput.text;
         
         foodData.composition = compositionInput.text;
+        foodData.price = Convert.ToSingle(priceInput.text);
         foodData.weight = weightInput.text;
         foodData.idСategory = dropdownField.value;
     }
