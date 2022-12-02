@@ -26,9 +26,14 @@ public class OrderElement : MonoBehaviour
 
     public void FoodIssued()
     {
-        Destroy(gameObject);
         if(!isReady)
             FoodReady();
+
+        string jsonString = JsonUtility.ToJson(order, true);
+        Message message = Message.Create(MessageSendMode.Reliable, (ushort) ServerToClientId.issuedFood);
+        message.AddString(jsonString);
+        NetworkManager.Instance.Server.Send(message, order.idClient);
+        Destroy(gameObject);
     }
     public void FoodReady()
     {
